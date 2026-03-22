@@ -153,7 +153,7 @@ def main() -> None:
         "ACK_TEXT",
         "Дякуємо. Ваше повідомлення надіслано модераторам.",
     )
-app = Application.builder().token(token).build()
+    app = Application.builder().token(token).build()
     app.bot_data["admin_ids"] = admin_ids
     app.bot_data["welcome_text"] = welcome_text
     app.bot_data["ack_text"] = ack_text
@@ -167,9 +167,8 @@ app = Application.builder().token(token).build()
 
     return app
 
-async def start_bot():
-
-    
+    async def start_bot():
+        
         async with app:
         await app.initialize()
         await app.start()
