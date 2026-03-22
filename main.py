@@ -167,9 +167,9 @@ def main() -> None:
 
     return app
 
-    async def start_bot():
-        
-        async with app:
+async def start_bot():
+    app = main()
+    async with app:
         await app.initialize()
         await app.start()
         await app.updater.start_polling(allowed_updates=Update.ALL_TYPES)
