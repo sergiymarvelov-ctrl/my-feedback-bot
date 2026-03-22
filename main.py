@@ -153,8 +153,7 @@ def main() -> None:
         "ACK_TEXT",
         "Дякуємо. Ваше повідомлення надіслано модераторам.",
     )
-
-    app = Application.builder().token(token).build()
+app = Application.builder().token(token).build()
     app.bot_data["admin_ids"] = admin_ids
     app.bot_data["welcome_text"] = welcome_text
     app.bot_data["ack_text"] = ack_text
@@ -166,13 +165,22 @@ def main() -> None:
     )
     app.add_error_handler(error_handler)
 
-    logger.info("Bot started with %s admin(s)", len(admin_ids))
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    return app
 
+async def start_bot():
+
+    
+        async with app:
+        await app.initialize()
+        await app.start()
+        await app.updater.start_polling(allowed_updates=Update.ALL_TYPES)
+        logging.info("Бот запущений та працює!")
+        while True:
+            await asyncio.sleep(3600)
 
 if __name__ == "__main__":
     import asyncio
     try:
-        asyncio.run(main())
+        asyncio.run(start_bot())
     except (KeyboardInterrupt, SystemExit):
         pass
